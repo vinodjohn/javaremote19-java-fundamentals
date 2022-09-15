@@ -87,8 +87,4 @@ public class DataType {
 
         k = 100;
     }
-
-
-
-    
 }
