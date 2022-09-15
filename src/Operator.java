@@ -145,6 +145,14 @@ public class Operator {
         //number comparison
         boolean checkNumber = 9 == 9.0; // int == float
         System.out.println(checkNumber);
+
+
+        //mostly used operators in real world
+        // ++, --
+        // +
+        // ==, !=
+        // &&, ||
+        // ?, :
     }
 
 }
