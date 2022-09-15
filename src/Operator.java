@@ -41,7 +41,8 @@ public class Operator {
 
         int z = i * a + (c / b) - (-j) % x;
         /*
-        1. z = i * a + (c / b) + j % x;
+        1. z = i * a + (c/b) - 10 % x ;
+        2. z = i * a +  4 - 10 % x;
          */
 
         System.out.println(z);
@@ -154,5 +155,4 @@ public class Operator {
         // &&, ||
         // ?, :
     }
-
 }
