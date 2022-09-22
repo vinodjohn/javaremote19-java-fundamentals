@@ -1,3 +1,5 @@
+package examples;
+
 /**
  * Examples for Java operators
  *

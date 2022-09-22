@@ -1,5 +1,7 @@
+package examples;
+
 /**
- * Statement examples
+ * examples.Statement examples
  *
  * @author Vinod John
  */
