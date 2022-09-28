@@ -14,18 +14,18 @@ public class Operator {
         int i = 0;
         System.out.println(i);
         System.out.println(i++); // 0 (increment here but not used)
-        i++;  // i + 1 (incremented value plus another increment)
+        i++;  // i = i + 1 (incremented value plus another increment)
         System.out.println(i);
 
         // post-decrement
         int y = 0;
-        System.out.println(y--);
-        System.out.println(y);
+        System.out.println(y--); // 0
+        System.out.println(y); // -1
 
         // pre-decrement
         int j = 10;
-        System.out.println(j);
-        System.out.println(--j);
+        System.out.println(j); // 10
+        System.out.println(--j); // 9
 
         // brackets are the highest priority
         int x = i + (-j); // x = i - j; 2 - 9
@@ -50,11 +50,11 @@ public class Operator {
         System.out.println(z);
 
 
-        int divide = 40 / 5; // Quotient value
+        int divide = 40 / 5; // Quotient value = 8
         System.out.println(divide);
 
-        int modulo = 40 % 7; // Reminder value
-        System.out.println(modulo);
+        int modulo = 40 % 5; // Reminder value = 5
+        System.out.println("modulo: " + modulo);
 
 
         // Comparison operators (==, !=, >, <, >=, <=)
@@ -132,8 +132,8 @@ public class Operator {
         //Assignment operators
         x = x + y; //  both are same
         x += y;
-        x /= y;
-        x *= y;
+        x /= y; // x = x / y
+        x *= y; // x = x * y
 
 
         //ternary operators (?, :)

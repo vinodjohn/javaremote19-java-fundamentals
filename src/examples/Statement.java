@@ -56,10 +56,21 @@ public class Statement {
             System.out.println("i is greater than y");
         } else if (i < 9) {
             System.out.println("i is lesser");
-        } else {
+        }
+        else if (i < 9) {
+            System.out.println("i is lesser");
+        }
+        else if (i < 9) {
+            System.out.println("i is lesser");
+        }
+        else if (i < 9) {
+            System.out.println("i is lesser");
+        }else if (i < 9) {
+            System.out.println("i is lesser");
+        }
+        else {
             System.out.println("i is invalid");
         }
-
 
 
         /* SWITCH
@@ -124,7 +135,7 @@ public class Statement {
         do {
             System.out.println("money =" + money);
             money += 10; // money = money + 10
-        } while(money < 100);
+        } while (money < 100);
 
         //FOR
         for (int g = 0; g <= 6; g++) {

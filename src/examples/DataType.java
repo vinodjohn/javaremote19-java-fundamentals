@@ -8,13 +8,17 @@ package examples;
 public class DataType {
     //Primitive Data types
     // Numbers
-    int a = 1;
-    byte byteNumber = 120;
-    long longNumber = 545454681351L;
-    short shortNumber = -32000;
+    int o;
 
-    float decimalNumber = 2.45454534836452374853746846848334438438438438438486748364389484384836438543854384f;
-    double doubleNumber = 3.456d;
+    byte byteNumber = 120;
+    short shortNumber = -32000;
+    int a = 1;
+    long longNumber = 545454681351L;
+
+
+    float decimalNumber = 2f; // 2.0
+    double doubleNumber = 3d;
+
 
     // Character
     char alpha = 'F';
@@ -89,4 +93,6 @@ public class DataType {
 
         k = 100;
     }
+
+
 }
