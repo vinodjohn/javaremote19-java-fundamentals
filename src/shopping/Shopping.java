@@ -1,6 +1,5 @@
 package shopping;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -46,10 +45,7 @@ public class Shopping {
     Okay. The payment is done.
      */
     public static void main(String[] args) {
-        Cart cart = mainMenu(new Cart());
-
-        System.out.println(Arrays.toString(cart.getProducts()));
-        System.out.println(cart.getTotalPrice());
+        mainMenu(new Cart());
     }
 
     private static Product[] getRandomProducts() {
@@ -76,7 +72,7 @@ public class Shopping {
         return new Product[]{fruit1, vegetable, food, chocolate, chips};
     }
 
-    private static Cart mainMenu(Cart cart) {
+    private static void mainMenu(Cart cart) {
         Scanner scanner = new Scanner(System.in);
         int mainMenuOption = displayMainMenu();
 
@@ -124,37 +120,16 @@ public class Shopping {
                     }
                 } while (hasMoreShopping);
 
+                mainMenu(cart);
+                break;
             case 2:
-                //Shopping cart
-                /*
-                1. Display the cart menu
-                2. Get option from the user
-                3. based on the options, you will do the opertion for cart
-
-                Show cart:
-                1. Display all the products(productLine) added to the cart
-                2. Total sum
-
-                Do you want to go back to the cart menu? (true/false)
-                If true -> go to cart menu
-                If false -> Ask user: do you want to pay? (true/false)
-
-                If true -> "Payment Successful!", Go back to Cart menu
-                If false-> Go back to cart menu.
-
-                If the payment is successful, then cart should not have any products inside, total Price should be 0.
-
-
-                 */
-
+                cart = cartMenu(cart);
+                break;
             case 3:
                 System.out.println("Thanks for shopping!");
                 break;
         }
-
-        return cart;
     }
-
 
     private static int displayMainMenu() {
         Scanner scanner = new Scanner(System.in);
@@ -218,8 +193,112 @@ public class Shopping {
         }
     }
 
+    private static Cart cartMenu(Cart cart) {
+        Scanner scanner = new Scanner(System.in);
+        int cartMenuOption = displayCartMenu();
+
+        switch (cartMenuOption) {
+            case 1:
+                int counter = 1;
+
+                if(cart != null) {
+                    for (ProductLine product : cart.getProducts()) {
+                        if (product != null) {
+                            System.out.println(counter + ". " + product.getProduct().getName() + ", " + product.getQuantity() + ", " + product.getPrice());
+                        }
+
+                        counter++;
+                    }
+
+                    System.out.println("Total price:" + cart.getTotalPrice());
+                    System.out.println("Do you want to go back to the cart menu?");
+                    String errorMessage = "Incorrect answer. Please enter again:";
+                    boolean checker = false;
+                    boolean answer = false;
+
+                    do {
+                        if (!scanner.hasNextBoolean()) {
+                            System.out.println(errorMessage);
+                            scanner.next();
+                        } else {
+                            answer = scanner.nextBoolean();
+                            checker = true;
+                        }
+                    } while (!checker);
+
+                    if (answer) {
+                        cartMenu(cart);
+                    } else {
+                        boolean isPaid = isPaymentDone();
+
+                        if (isPaid) {
+                            cart = new Cart();
+                            mainMenu(cart);
+                        } else {
+                            cartMenu(cart);
+                        }
+                    }
+                } else {
+                    System.out.println("Cart is empty!");
+                    System.out.println("Going back to cart menu...");
+                    cartMenu(null);
+                }
+
+                break;
+            case 2:
+                if (cart.getTotalPrice() <= 0) {
+                    System.out.println("Nothing to pay! Going back to Main menu..");
+                    mainMenu(cart);
+                } else {
+                    boolean isPaid = isPaymentDone();
+
+                    if (isPaid) {
+                        cart = new Cart();
+                        mainMenu(cart);
+                    } else {
+                        cartMenu(cart);
+                    }
+                }
+
+                break;
+            case 3:
+                mainMenu(cart);
+                break;
+        }
+
+        return cart;
+    }
+
+    private static boolean isPaymentDone() {
+        Scanner scanner = new Scanner(System.in);
+        String errorMessage = "Incorrect answer. Please enter again:";
+        boolean checker = false;
+        boolean answer = false;
+
+        System.out.println("Do you want to pay?");
+
+        do {
+            if (!scanner.hasNextBoolean()) {
+                System.out.println(errorMessage);
+                scanner.next();
+            } else {
+                answer = scanner.nextBoolean();
+                checker = true;
+            }
+        } while (!checker);
+
+        if (answer) {
+            System.out.println("Payment successful! Going back to Main menu....");
+            return true;
+        } else {
+            System.out.println("Payment unsuccessful! Going back to Cart menu....");
+            return false;
+        }
+    }
+
+
     private static int displayCartMenu() {
-        System.out.println("CART MENU \n --------------");
+        System.out.println("CART MENU \n--------------");
         System.out.println("1. Show cart \n2. Pay \n3. Exit to main menu");
         System.out.println("Choose an option from above:");
 
