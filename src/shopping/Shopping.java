@@ -46,48 +46,10 @@ public class Shopping {
     Okay. The payment is done.
      */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int mainMenuOption = displayMainMenu();
-        Cart cart = new Cart();
-
-        switch (mainMenuOption) {
-            case 1: // shop products
-                boolean hasMoreShopping = false;
-                int counter = 0;
-                int cartLimit = 5;
-                ProductLine[] products = new ProductLine[cartLimit]; // It can hold only 5 products
-
-                do {
-                    if (counter >= cartLimit) {
-                        System.out.println("Your limit reached. Please proceed to pay!");
-                        break;
-                    }
-
-                    ProductLine productLine = getProductToCart();
-                    products[counter] = productLine;
-                    cart.setProducts(products);
-                    System.out.println("Do you want to shop more products?");
-                    String errorMessage = "Incorrect answer. Please enter again:";
-                    boolean checker = false;
-
-                    do {
-                        if (!scanner.hasNextBoolean()) {
-                            System.out.println(errorMessage);
-                            scanner.next();
-                        } else {
-                            hasMoreShopping = scanner.nextBoolean();
-                            checker = true;
-                        }
-                    } while (!checker);
-
-                    if (hasMoreShopping) {
-                        counter++;
-                    }
-                } while (hasMoreShopping);
-
-        }
+        Cart cart = mainMenu(new Cart());
 
         System.out.println(Arrays.toString(cart.getProducts()));
+        System.out.println(cart.getTotalPrice());
     }
 
     private static Product[] getRandomProducts() {
@@ -113,6 +75,86 @@ public class Shopping {
 
         return new Product[]{fruit1, vegetable, food, chocolate, chips};
     }
+
+    private static Cart mainMenu(Cart cart) {
+        Scanner scanner = new Scanner(System.in);
+        int mainMenuOption = displayMainMenu();
+
+        switch (mainMenuOption) {
+            case 1: // shop products
+                boolean hasMoreShopping = false;
+                int counter = 0;
+                int cartLimit = 5;
+                float totalPrice = 0;
+                ProductLine[] products = new ProductLine[cartLimit]; // It can hold only 5 products
+
+                do {
+                    if (counter >= cartLimit) {
+                        System.out.println("Your limit reached. Please proceed to pay!");
+                        break;
+                    }
+
+                    ProductLine productLine = getProductToCart();
+
+                    if (productLine == null) {
+                        mainMenu(cart);
+                    } else {
+                        products[counter] = productLine;
+                        cart.setProducts(products);
+                        totalPrice += productLine.getPrice();
+                        cart.setTotalPrice(totalPrice);
+
+                        System.out.println("Do you want to shop more products?");
+                        String errorMessage = "Incorrect answer. Please enter again:";
+                        boolean checker = false;
+
+                        do {
+                            if (!scanner.hasNextBoolean()) {
+                                System.out.println(errorMessage);
+                                scanner.next();
+                            } else {
+                                hasMoreShopping = scanner.nextBoolean();
+                                checker = true;
+                            }
+                        } while (!checker);
+
+                        if (hasMoreShopping) {
+                            counter++;
+                        }
+                    }
+                } while (hasMoreShopping);
+
+            case 2:
+                //Shopping cart
+                /*
+                1. Display the cart menu
+                2. Get option from the user
+                3. based on the options, you will do the opertion for cart
+
+                Show cart:
+                1. Display all the products(productLine) added to the cart
+                2. Total sum
+
+                Do you want to go back to the cart menu? (true/false)
+                If true -> go to cart menu
+                If false -> Ask user: do you want to pay? (true/false)
+
+                If true -> "Payment Successful!", Go back to Cart menu
+                If false-> Go back to cart menu.
+
+                If the payment is successful, then cart should not have any products inside, total Price should be 0.
+
+
+                 */
+
+            case 3:
+                System.out.println("Thanks for shopping!");
+                break;
+        }
+
+        return cart;
+    }
+
 
     private static int displayMainMenu() {
         Scanner scanner = new Scanner(System.in);
