@@ -1,5 +1,6 @@
 package quiz;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -46,6 +47,7 @@ public class Quiz {
 
         int totalScore = 0;
         int rightAnswer = 1;
+        int wrongAnswer = 0;
         boolean hasPassed;
 
         Question[] questions = getRandomQuestions();
@@ -65,17 +67,20 @@ public class Quiz {
             //Creating a user answer object and assign it to the userAnswer array
             Answer answer = new Answer();
             answer.setQuestionId(question.getId());
-            answer.setCorrectOptionIndex(getAnswerOption(question.getOptions().length));
+            answer.setCorrectOptionIndex(getAnswerOption(question.getOptions().length - 1));
             userAnswers[j] = answer;
+
+            System.out.println();
         }
 
         Answer[] correctAnswers = getAnswers();
 
-        // Total Score Calculation: Compare answerOptios of CorrectAnswer and the userAnswer
-        for (Answer correctAnswer : correctAnswers) {
-            for (Answer userAnswer : userAnswers) {
-                if (correctAnswer.getQuestionId() == userAnswer.getQuestionId() && correctAnswer.getCorrectOptionIndex() == userAnswer.getCorrectOptionIndex()) {
-                    totalScore += rightAnswer;
+        // Total Score Calculation: Compare answerOptions of CorrectAnswer and the userAnswer
+        for (Answer userAnswer : userAnswers) {
+            for (Answer correctAnswer : correctAnswers) {
+                if (Objects.equals(correctAnswer.getQuestionId(), userAnswer.getQuestionId())) {
+                    totalScore += correctAnswer.getCorrectOptionIndex() == userAnswer.getCorrectOptionIndex() ? rightAnswer : wrongAnswer;
+                    break;
                 }
             }
         }
@@ -83,9 +88,11 @@ public class Quiz {
         System.out.println("Total score: " + totalScore);
 
         //Pass score is 50%
-        hasPassed = totalScore >= questions.length / 2;
+        hasPassed = totalScore >= (double) questions.length / 2;
 
         System.out.println(hasPassed ? "PASSED!" : "FAILED!!");
+
+        printCorrectAnswers(questions, correctAnswers);
     }
 
 
@@ -146,5 +153,20 @@ public class Quiz {
         } while (option > limit);
 
         return option;
+    }
+
+    private static void printCorrectAnswers(Question[] questions, Answer[] correctAnswers){
+        System.out.println("CORRECT ANSWERS:");
+        for (int i = 0; i < questions.length; i++) {
+            System.out.println((i + 1)  + ". "+ questions[i].getDescription());
+
+            for(Answer answer: correctAnswers) {
+                if(Objects.equals(questions[i].getId(), answer.getQuestionId())) {
+                    System.out.println("Answer: " + questions[i].getOptions()[answer.getCorrectOptionIndex()]);
+                    break;
+                }
+            }
+            System.out.println();
+        }
     }
 }
