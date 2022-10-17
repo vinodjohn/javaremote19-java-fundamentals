@@ -32,7 +32,7 @@ import java.util.Scanner;
  * The correct answers:
  * a. Tallinn
  * b.
- *
+
  *
  *
  *
