@@ -55,7 +55,7 @@ public class RandomEven {
         }
 
         System.out.println("Odd numbers of the array:");
-        displayArray(convertListToArray(oddArrayList));
+
     }
 
 
