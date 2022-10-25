@@ -46,18 +46,18 @@ public class PetrolStation {
         if (totalAmount > 0) {
             System.out.println("Do you wish to pay now? (true/false)");
 
-            if(isContinue()) {
+            if (isContinue()) {
                 boolean isMoneyPaid = false;
 
-                while(!isMoneyPaid) {
+                while (!isMoneyPaid) {
                     double money = getMoney();
-                    System.out.println("Money paid: "  + money + CURRENCY);
+                    System.out.println("Money paid: " + money + CURRENCY);
                     String message = "Thanks for the payment! Visit us again!";
 
-                    if(money == totalAmount) {
+                    if (money == totalAmount) {
                         System.out.println(message);
                         isMoneyPaid = true;
-                    } else if(money > totalAmount) {
+                    } else if (money > totalAmount) {
                         double balance = money - totalAmount;
                         System.out.println("Balance returned: " + balance + CURRENCY);
                         System.out.println(message);
